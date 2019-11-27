@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using static DataStructuresLibrary.Queues.QueueCustomExceptions;
 
 namespace DataStructuresLibrary.Queues.ArrayBasedQueue
 {
-    public class ArrayBasedQueue<T> : IQueue<T> //Optimize
+    public class ArrayBasedQueue<T> : IQueue<T> //Optimize/Refactor further
     {
         private T[] arrayQueue;
         private int maxCapacity;
-        private int frontIndex;
         private int rearIndex;
         private T[] temporaryArray;
         public T Front { get; private set; }
@@ -23,8 +20,7 @@ namespace DataStructuresLibrary.Queues.ArrayBasedQueue
         {
             if (rearIndex == maxCapacity)
             {
-                Console.WriteLine("Queue is full");
-                return;//Check to see if it's correct;
+                throw new QueueOverflowException();
             }
             arrayQueue[rearIndex] = data;
             rearIndex++;
@@ -36,7 +32,7 @@ namespace DataStructuresLibrary.Queues.ArrayBasedQueue
         {
             if (rearIndex == 0 || arrayQueue[0] == null)
             {
-                throw new Exception(); //Underflow exception
+                throw new QueueUnderflowException("Queue is empty.");
             }
             else if (rearIndex == 1)
             {
@@ -60,7 +56,6 @@ namespace DataStructuresLibrary.Queues.ArrayBasedQueue
                 Rear = arrayQueue[rearIndex - 1];
             }
             Front = arrayQueue[0];
-        }
-     
+        } 
     }
 }
