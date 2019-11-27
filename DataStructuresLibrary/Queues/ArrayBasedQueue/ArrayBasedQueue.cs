@@ -10,6 +10,7 @@ namespace DataStructuresLibrary.Queues.ArrayBasedQueue
         private T[] temporaryArray;
         public T Front { get; private set; }
         public T Rear { get; private set; }
+        public int Count { get; private set; }
         public ArrayBasedQueue(int capacity)
         {
             maxCapacity = capacity;
@@ -24,6 +25,7 @@ namespace DataStructuresLibrary.Queues.ArrayBasedQueue
             }
             arrayQueue[rearIndex] = data;
             rearIndex++;
+            Count++;
             Rear = arrayQueue[rearIndex - 1];
             Front = arrayQueue[0];
         }
@@ -56,6 +58,7 @@ namespace DataStructuresLibrary.Queues.ArrayBasedQueue
                 Rear = arrayQueue[rearIndex - 1];
             }
             Front = arrayQueue[0];
+            Count--;
         } 
     }
 }
