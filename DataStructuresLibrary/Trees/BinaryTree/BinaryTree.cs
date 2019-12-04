@@ -74,14 +74,16 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             }
             Console.WriteLine(root.Data);
         }
-        /*Insert Node in Binary Tree, note that this implementation is not good if it was
-         a binary search tree, as it does not check the root value of subtrees. 
-         This method will simply insert a node on the right side if it's value is bigger, else insert at left.*/
+        //Insert node into Binary Search tree, note that there can be no duplicate nodes.
         public void InsertInOrder(Node root, Node newNode)
         {
             if (root == null)
             {
                 root = newNode;
+                return;
+            }
+            else if (root.Data == newNode.Data)
+            {
                 return;
             }
 
@@ -103,8 +105,11 @@ namespace DataStructuresLibrary.Trees.BinaryTree
                 {
                     InsertInOrder(root.left, newNode);
                 }
-                root.left = newNode;
-                return;
+                else
+                {
+                    root.left = newNode;
+                    return;
+                }
             }
         }
     }
