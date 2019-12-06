@@ -13,15 +13,6 @@ namespace DataStructuresLibrary.Trees.BinaryTree
         {
             Root = new Node(data);
         }
-
-        public void Insert(int data)
-        {
-            if (Root == null)
-            {
-                Root = new Node(data);
-                return;
-            }
-        }
         //Print Nodes In-order Traversal
         public void PrintInOrder(Node root)
         {
@@ -108,6 +99,51 @@ namespace DataStructuresLibrary.Trees.BinaryTree
                 else
                 {
                     root.left = newNode;
+                    return;
+                }
+            }
+        }
+        public void DeleteNode(ref Node root, int value)
+        {
+            if (root.Data == value)
+            {
+                if (root.left == null && root.right == null)
+                {
+                    root = null;
+                    return;
+                }
+                else if (root.left == null)
+                {
+                    root = root.right;
+                    return;
+                }
+                else if (root.right == null)
+                {
+                    root = root.left;
+                    return;
+                }
+                else
+                {
+                    Node inOrderPredeccessor = root.left;
+                    while (inOrderPredeccessor.right != null)
+                    {
+                        inOrderPredeccessor = inOrderPredeccessor.right;
+                    }
+                    root = inOrderPredeccessor;
+                    inOrderPredeccessor = null;
+                    return;
+                }
+            }
+            else
+            {
+                if (value > root.Data)
+                {
+                    DeleteNode(ref root.right, value);
+                    return;
+                }
+                else if (value < root.Data)
+                {
+                    DeleteNode(ref root.left, value);
                     return;
                 }
             }
