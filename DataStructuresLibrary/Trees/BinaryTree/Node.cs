@@ -6,7 +6,7 @@ namespace DataStructuresLibrary.Trees.BinaryTree
 {
     public class Node
     {
-        public int Data { get; set; }
+        public int Data { get; private set; }
         public Node left, right;
         public Node(int data)
         {

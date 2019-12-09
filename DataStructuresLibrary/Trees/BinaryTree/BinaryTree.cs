@@ -1,5 +1,5 @@
 ﻿using System;
-
+using DataStructuresLibrary.Trees;
 namespace DataStructuresLibrary.Trees.BinaryTree
 {
     public class BinaryTree
@@ -103,50 +103,100 @@ namespace DataStructuresLibrary.Trees.BinaryTree
                 }
             }
         }
-        public void DeleteNode(ref Node root, int value)
+        //Sum all nodes in-order.
+        public int Sum(Node root)
         {
-            if (root.Data == value)
+            int sum = 0;
+            if (root == null)
             {
-                if (root.left == null && root.right == null)
+                throw new BinaryTreeCustomExceptions.TreeIsEmptyException("Tree is empty.");
+            }
+            if (root.left != null)
+            {
+                sum += Sum(root.left);
+            }
+            sum += root.Data;
+            if (root.right != null)
+            {
+                sum += Sum(root.right);
+            }
+            return sum;
+        }
+        public void Delete(Node root, int value)
+        {
+            //Add delete for case for first node deletion.
+            if (value > root.Data)
+            {
+                if (value == root.right.Data)
                 {
-                    root = null;
-                    return;
+                    //DeleteHelper actually deletes the node and merges the left and right links.
+                    DeleteHelper(ref root.right);
                 }
-                else if (root.left == null)
+                else
                 {
-                    root = root.right;
-                    return;
+                    Delete(root.right, value);
                 }
-                else if (root.right == null)
+            }
+            else if (value < root.Data)
+            {
+                if (value < root.left.Data)
                 {
-                    root = root.left;
+                    DeleteHelper(ref root.left);
+                }
+                else
+                {
+                    Delete(root.left, value);
+                }
+            }
+        }
+        private void DeleteHelper(ref Node nodeToDelete)
+        {
+            //Operations to do whether the node is a leaf, or internal node.
+            if (nodeToDelete.left == null && nodeToDelete.right == null)
+            {
+                nodeToDelete = null;
+                return;
+            }
+            else if (nodeToDelete.left == null)
+            {
+                nodeToDelete = nodeToDelete.right;
+                return;
+            }
+            else if (nodeToDelete.right == null)
+            {
+                nodeToDelete = nodeToDelete.left;
+                return;
+            }
+            else
+            {
+                Node left = nodeToDelete.left;
+                Node right = nodeToDelete.right;
+                if (nodeToDelete.left.right != null)
+                {
+                    /*FindLargestNode is a helper method to find the largest node in left subtree to swap with.
+                     FindLargestNode.right is the last && largest node.
+                     */
+                    Node nodeToSwapWith = FindLargestNode(nodeToDelete.left);
+                    nodeToDelete = nodeToSwapWith.right;
+                    nodeToDelete.left = left;
+                    nodeToDelete.right = right;
                     return;
                 }
                 else
                 {
-                    Node inOrderPredeccessor = root.left;
-                    while (inOrderPredeccessor.right != null)
-                    {
-                        inOrderPredeccessor = inOrderPredeccessor.right;
-                    }
-                    root = inOrderPredeccessor;
-                    inOrderPredeccessor = null;
+                    nodeToDelete = nodeToDelete.left;
+                    nodeToDelete.right = right;
                     return;
                 }
             }
-            else
+        }
+        private Node FindLargestNode(Node node)
+        {
+            while (node.right.right != null)
             {
-                if (value > root.Data)
-                {
-                    DeleteNode(ref root.right, value);
-                    return;
-                }
-                else if (value < root.Data)
-                {
-                    DeleteNode(ref root.left, value);
-                    return;
-                }
+                node = node.right;
             }
+            return node;
         }
     }
 }
