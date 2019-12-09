@@ -1,20 +1,25 @@
 ﻿using System;
-using DataStructuresLibrary.Trees;
 namespace DataStructuresLibrary.Trees.BinaryTree
 {
     public class BinaryTree
     {
-        public Node Root { get; private set; }
+        private Node root;
+        public Node Root { get => root; private set => root = value; }
+
         public BinaryTree()
         {
-            Root = null;
+            root = null;
         }
         public BinaryTree(int data)
         {
-            Root = new Node(data);
+            root = new Node(data);
         }
         //Print Nodes In-order Traversal
-        public void PrintInOrder(Node root)
+        public void Print()
+        {
+            PrintInOrder(root);
+        }
+        private void PrintInOrder(Node root)
         {
             if (root == null)
             {
@@ -32,7 +37,7 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             }
         }
         //Print Nodes Pre-order Traversal
-        public void PrintPreOrder(Node root)
+        private void PrintPreOrder(Node root)
         {
             if (root == null)
             {
@@ -49,7 +54,7 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             }
         }
         //Print Nodes Post-order Traversal
-        public void PrintPostOrder(Node root)
+        private void PrintPostOrder(Node root)
         {
             if (root == null)
             {
@@ -66,11 +71,15 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             Console.WriteLine(root.Data);
         }
         //Insert node into Binary Search tree, note that there can be no duplicate nodes.
-        public void InsertInOrder(Node root, Node newNode)
+        public void Insert(Node newNode)
         {
-            if (root == null)
+            InsertInOrder(root, newNode);
+        }
+        private void InsertInOrder(Node root, Node newNode)
+        {
+            if (this.root == null)
             {
-                root = newNode;
+                this.root = newNode;
                 return;
             }
             else if (root.Data == newNode.Data)
@@ -104,7 +113,11 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             }
         }
         //Sum all nodes in-order.
-        public int Sum(Node root)
+        public int Sum()
+        {
+            return Sum(root);
+        }
+        private int Sum(Node root)
         {
             int sum = 0;
             if (root == null)
@@ -122,9 +135,17 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             }
             return sum;
         }
-        public void Delete(Node root, int value)
+        public void Delete(int value)
         {
-            //Add delete for case for first node deletion.
+            Delete(root, value);
+        }
+        private void Delete(Node root, int value)
+        {
+            if (value == root.Data)
+            {
+                DeleteHelper(ref this.root);
+                return;
+            }
             if (value > root.Data)
             {
                 if (value == root.right.Data)
@@ -178,6 +199,7 @@ namespace DataStructuresLibrary.Trees.BinaryTree
                      */
                     Node nodeToSwapWith = FindLargestNode(nodeToDelete.left);
                     nodeToDelete = nodeToSwapWith.right;
+                    nodeToSwapWith.right = null;
                     nodeToDelete.left = left;
                     nodeToDelete.right = right;
                     return;

@@ -1,5 +1,5 @@
-using NUnit.Framework;
 using DataStructuresLibrary.Trees.BinaryTree;
+using NUnit.Framework;
 
 namespace BinaryTreeTests
 {
@@ -13,37 +13,59 @@ namespace BinaryTreeTests
             Assert.AreEqual(5, myTree.Root.Data);
         }
         [Test]
-        public void BinaryTreeDeleteTEst()
+        public void BinaryTreeDeleteTest()
         {
             BinaryTree tree = new BinaryTree(11);
-            tree.InsertInOrder(tree.Root, new Node(6));
-            tree.InsertInOrder(tree.Root, new Node(8));
-            tree.InsertInOrder(tree.Root, new Node(19));
-            tree.InsertInOrder(tree.Root, new Node(4));
-            tree.InsertInOrder(tree.Root, new Node(10));
-            tree.InsertInOrder(tree.Root, new Node(5));
-            tree.InsertInOrder(tree.Root, new Node(17));
-            tree.InsertInOrder(tree.Root, new Node(43));
-            tree.InsertInOrder(tree.Root, new Node(49));
-            tree.InsertInOrder(tree.Root, new Node(31));
-            tree.Delete(tree.Root, 49);
+            tree.Insert(new Node(6));
+            tree.Insert(new Node(8));
+            tree.Insert(new Node(19));
+            tree.Insert(new Node(4));
+            tree.Insert(new Node(10));
+            tree.Insert(new Node(5));
+            tree.Insert(new Node(17));
+            tree.Insert(new Node(43));
+            tree.Insert(new Node(49));
+            tree.Insert(new Node(31));
+            tree.Delete(49);
+            int sum = tree.Sum();
             Assert.IsNull(tree.Root.right.right.right);
+            Assert.AreEqual(154, sum);
+        }
+        [Test]
+        public void BinaryTreeDeleteRootNode()
+        {
+            BinaryTree tree = new BinaryTree(11);
+            tree.Insert(new Node(6));
+            tree.Insert(new Node(8));
+            tree.Insert(new Node(19));
+            tree.Insert(new Node(4));
+            tree.Insert(new Node(10));
+            tree.Insert(new Node(5));
+            tree.Insert(new Node(17));
+            tree.Insert(new Node(43));
+            tree.Insert(new Node(49));
+            tree.Insert(new Node(31));
+            tree.Delete(11);
+            int rootData = tree.Root.Data;
+            int sum = tree.Sum();
+            Assert.AreEqual(192, sum);
+            Assert.AreEqual(10, rootData);
         }
         [Test]
         public void BinaryTreeSum()
         {
             BinaryTree tree = new BinaryTree(11);
-            tree.InsertInOrder(tree.Root, new Node(6));
-            tree.InsertInOrder(tree.Root, new Node(8));
-            tree.InsertInOrder(tree.Root, new Node(19));
-            tree.InsertInOrder(tree.Root, new Node(4));
-            tree.InsertInOrder(tree.Root, new Node(10));
-            tree.InsertInOrder(tree.Root, new Node(5));
-            tree.InsertInOrder(tree.Root, new Node(17));
-            tree.InsertInOrder(tree.Root, new Node(43));
-            tree.InsertInOrder(tree.Root, new Node(49));
-            tree.InsertInOrder(tree.Root, new Node(31));
-            int sum = tree.Sum(tree.Root);
+            tree.Insert(new Node(6));
+            tree.Insert(new Node(8));
+            tree.Insert(new Node(19));
+            tree.Insert(new Node(4));
+            tree.Insert(new Node(10));
+            tree.Insert(new Node(5));
+            tree.Insert(new Node(17));
+            tree.Insert(new Node(43));
+            tree.Insert(new Node(49));
+            tree.Insert(new Node(31));
+            int sum = tree.Sum();
             Assert.AreEqual(203, sum);
         }
     }
