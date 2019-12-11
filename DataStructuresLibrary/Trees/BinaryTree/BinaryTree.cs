@@ -73,8 +73,7 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             }
             Console.WriteLine(root.Data);
         }
-
-        //Breadth-First Search using Queue data structure.
+        //Breadth-First Traversal using Queue data structure.
         public void PrintByLevel()
         {
             if(root == null)
@@ -97,6 +96,34 @@ namespace DataStructuresLibrary.Trees.BinaryTree
                     queue.Enqueue(rootNode.right);
                 }
             }
+        }
+        public int Find(int data)
+        {
+            if (root == null)
+            {
+                throw new BinaryTreeCustomExceptions.TreeIsEmptyException("Tree is empty.");
+            }
+            Node rootNode = root;
+            while (rootNode != null)
+            {
+                if (data == rootNode.Data)
+                {
+                    return rootNode.Data;
+                }
+                else if (data < rootNode.Data && rootNode.left != null)
+                {
+                    rootNode = rootNode.left;
+                }
+                else if (data > rootNode.Data && rootNode.right != null)
+                {
+                    rootNode = rootNode.right;
+                }
+                else
+                {
+                    throw new BinaryTreeCustomExceptions.ValueNotFoundException("Value not found.");
+                }
+            }
+            return 0;
         }
         //Insert node into Binary Search tree, note that there can be no duplicate nodes.
         public void Insert(Node newNode)
@@ -165,6 +192,10 @@ namespace DataStructuresLibrary.Trees.BinaryTree
         }
         public void Delete(int value)
         {
+            if (root == null)
+            {
+                throw new BinaryTreeCustomExceptions.TreeIsEmptyException("Tree is empty.");
+            }
             Delete(root, value);
         }
         private void Delete(Node root, int value)
@@ -176,10 +207,14 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             }
             if (value > root.Data)
             {
-                if (value == root.right.Data)
+                if (root.right != null && value == root.right.Data)
                 {
                     //DeleteHelper actually deletes the node and merges the left and right links.
                     DeleteHelper(ref root.right);
+                }
+                else if (root.right == null)
+                {
+                    Console.WriteLine("Value not found.");
                 }
                 else
                 {
@@ -188,9 +223,13 @@ namespace DataStructuresLibrary.Trees.BinaryTree
             }
             else if (value < root.Data)
             {
-                if (value < root.left.Data)
+                if (root.left != null && value < root.left.Data)
                 {
                     DeleteHelper(ref root.left);
+                }
+                else if (root.left == null)
+                {
+                    Console.WriteLine("Value not found.");
                 }
                 else
                 {

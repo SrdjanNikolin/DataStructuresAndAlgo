@@ -8,5 +8,9 @@ namespace DataStructuresLibrary.Trees
         {
             public TreeIsEmptyException(string message) : base(message) { }
         }
+        public class ValueNotFoundException : Exception
+        {
+            public ValueNotFoundException(string message) : base(message) { }
+        }
     }
 }
