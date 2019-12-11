@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace DataStructuresLibrary.Trees.BinaryTree
 {
     public class BinaryTree
@@ -19,6 +21,7 @@ namespace DataStructuresLibrary.Trees.BinaryTree
         {
             PrintInOrder(root);
         }
+        //Depth-First Search/Traversal
         private void PrintInOrder(Node root)
         {
             if (root == null)
@@ -69,6 +72,31 @@ namespace DataStructuresLibrary.Trees.BinaryTree
                 PrintPostOrder(root.right);
             }
             Console.WriteLine(root.Data);
+        }
+
+        //Breadth-First Search using Queue data structure.
+        public void PrintByLevel()
+        {
+            if(root == null)
+            {
+                throw new BinaryTreeCustomExceptions.TreeIsEmptyException("Tree is empty.");
+            }
+            Queue<Node> queue = new Queue<Node>();
+            queue.Enqueue(root);
+            Node rootNode;
+            while (queue.Count != 0)
+            {
+                Console.WriteLine(queue.Peek().Data);
+                rootNode = queue.Dequeue();
+                if (rootNode.left != null)
+                {
+                    queue.Enqueue(rootNode.left);
+                }
+                if (rootNode.right != null)
+                {
+                    queue.Enqueue(rootNode.right);
+                }
+            }
         }
         //Insert node into Binary Search tree, note that there can be no duplicate nodes.
         public void Insert(Node newNode)
