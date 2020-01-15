@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataStructuresLibrary.Queues
+﻿namespace DataStructuresLibrary.Queues
 {
     public interface IQueue<T> //See IStack for more operations
     {
@@ -10,5 +6,6 @@ namespace DataStructuresLibrary.Queues
         void Dequeue();
         T Front { get;}
         T Rear { get;}
+        int Count { get; }
     }
 }
